@@ -34,9 +34,12 @@ public class CardTweener : MonoBehaviour
         //rectTransform.localPosition = drawnCardPile.localPosition;
     }
 
-    public void TweenDiscardCard(Action onComplete)
+    public void TweenDiscardCard(Action onStart, Action onComplete)
     {
-        TweenCallback callback = () => {
+        TweenCallback startCallback = () => {
+            onStart?.Invoke();
+        };
+        TweenCallback completeCallback = () => {
             onComplete?.Invoke();
         };
 
@@ -45,7 +48,7 @@ public class CardTweener : MonoBehaviour
         Vector3 targetPosition = discardPile.localPosition + Vector3.down * rectTransform.rect.height / 2f;
         sequence.Append(rectTransform.DOAnchorPos3D(targetPosition, 0.5f, false))
             .AppendInterval(0.2f)
-            .OnComplete(callback);
-        //rectTransform.localPosition = discardPile.localPosition + Vector3.down * rectTransform.rect.height / 2f;
+            .OnStart(startCallback)
+            .OnComplete(completeCallback);
     }
 }

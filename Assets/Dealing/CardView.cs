@@ -36,12 +36,15 @@ public class CardView : MonoBehaviour
         tweener.TweenDrawCard();
     }
 
-    public void DiscardCard(Action onComplete)
+    public void DiscardCard(Action onStart, Action onComplete)
     {
-        Action callback = () => {
+        Action startCallback = () => {
+            onStart?.Invoke();
+        };
+        Action completeCallback = () => {
             tweener.ResetToCardPile();
             onComplete?.Invoke();
         };
-        tweener.TweenDiscardCard(callback);
+        tweener.TweenDiscardCard(startCallback, completeCallback);
     }
 }
