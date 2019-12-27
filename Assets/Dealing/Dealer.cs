@@ -56,6 +56,11 @@ public class Dealer : MonoBehaviour
         throw new NotImplementedException();
     }
 
+    public void ResetDeck()
+    {
+        deck = referenceDeck.CreateDeck();
+    }
+
     private void Start()
     {
         deck = referenceDeck.CreateDeck();
@@ -71,12 +76,6 @@ public class Dealer : MonoBehaviour
 
     private void BetterDealStep()
     {
-        /* if (!deck.HasCardsRemaining())
-        {
-            Debug.LogWarning("There are no more cards to deal.");
-            return;
-        } */
-
         if (paused)
         {
             return;

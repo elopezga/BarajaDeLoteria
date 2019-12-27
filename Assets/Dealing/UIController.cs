@@ -23,6 +23,21 @@ public class UIController : MonoBehaviour
         
     }
 
+    public void HideTimeIndicator()
+    {
+        timeIndicator.enabled = false;
+    }
+
+    public void ShowTimeIndicator()
+    {
+        timeIndicator.enabled = true;
+    }
+
+    public void ResetTimeIndicator()
+    {
+        UpdateTimeIndicator(1f);
+    }
+
     public void UpdateTimeIndicator(float percentage)
     {
         timeIndicator.fillAmount = percentage;

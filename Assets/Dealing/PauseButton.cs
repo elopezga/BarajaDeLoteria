@@ -63,4 +63,20 @@ public class PauseButton : MonoBehaviour
     {
         image.sprite = playImage;
     }
+
+    public void Reset()
+    {
+        isShowingPauseImage = true;
+        image.sprite = pauseImage;
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 }

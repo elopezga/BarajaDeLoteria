@@ -18,7 +18,7 @@ public class Orchestrator : MonoBehaviour
         dealer.OnDrawCard.AddListener(cardsManager.HandleCardDraw);
         dealer.OnCardTimeReached.AddListener(cardsManager.HandleCardTimeReached);
         dealer.OnDealingTimeStep.AddListener(uiController.UpdateTimeIndicator);
-        dealer.OnFinishedDealing.AddListener(stateMachine.GoToStateStart);
+        dealer.OnFinishedDealing.AddListener(HandleFinishedDealing);
 
         cardsManager.OnCardDiscardEnd.AddListener(dealer.DealNextCard);
         uiController.PauseButton.AddListener(HandlePause);
@@ -34,7 +34,7 @@ public class Orchestrator : MonoBehaviour
         dealer.OnDrawCard.RemoveListener(cardsManager.HandleCardDraw);
         dealer.OnCardTimeReached.RemoveListener(cardsManager.HandleCardTimeReached);
         dealer.OnDealingTimeStep.RemoveListener(uiController.UpdateTimeIndicator);
-        dealer.OnFinishedDealing.RemoveListener(stateMachine.GoToStateStart);
+        dealer.OnFinishedDealing.RemoveListener(HandleFinishedDealing);
 
         cardsManager.OnCardDiscardEnd.RemoveListener(dealer.DealNextCard);
         uiController.PauseButton.RemoveListener(HandlePause);
@@ -55,7 +55,21 @@ public class Orchestrator : MonoBehaviour
 
     private void HandleStartClicked()
     {
+        dealer.ResetDeck();
+        uiController.ResetTimeIndicator();
+        uiController.ShowTimeIndicator();
+        uiController.PauseButton.Reset();
+        uiController.PauseButton.Show();
         stateMachine.GoToStateDealing();
+    }
+
+    private void HandleFinishedDealing()
+    {
+        uiController.PauseButton.Reset();
+        uiController.PauseButton.Hide();
+        uiController.HideTimeIndicator();
+        uiController.MenuController.Show();
+        stateMachine.GoToStateStart();
     }
 
 

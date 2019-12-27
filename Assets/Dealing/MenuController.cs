@@ -44,7 +44,6 @@ public class MenuController : MonoBehaviour
     {
         Vector3 targetPosition = menuExitTarget.localPosition + Vector3.left * rectTransform.rect.width / 2f;
         rectTransform.DOAnchorPos3D(targetPosition, 0.5f, false);
-        //rectTransform.DOAnchorPos3D(menuExitTarget.localPosition, 0.5f, false);
     }
 
     public void AddListenerOnStartClick(UnityAction callback)
