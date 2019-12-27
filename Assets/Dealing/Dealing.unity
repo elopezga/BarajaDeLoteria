@@ -162,7 +162,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1647964429048165944}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1706792565}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db55627d2a56bb244b3feecbf935eaba, type: 3}
@@ -303,6 +303,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1572531722}
+  - {fileID: 1571446760}
   m_Father: {fileID: 298114940}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -323,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d12dcf600c3125248a76a088a0e4fb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseButton: {fileID: 1571446764}
   timeIndicator: {fileID: 1572531723}
 --- !u!1 &321821794
 GameObject:
@@ -546,7 +548,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dealer: {fileID: 1315398274}
   cardsManager: {fileID: 1099056140}
-  uiController: {fileID: 0}
+  uiController: {fileID: 311040686}
+  stateMachine: {fileID: 1668397006}
 --- !u!4 &895731551
 Transform:
   m_ObjectHideFlags: 0
@@ -850,9 +853,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceDeck: {fileID: 11400000, guid: 97e1d8af5ece98f4da2caef5c36363e9, type: 2}
   dealEachSecond: 7
-  OnDrawFirstCard:
-    m_PersistentCalls:
-      m_Calls: []
   OnDrawCard:
     m_PersistentCalls:
       m_Calls: []
@@ -871,6 +871,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnCardTimeReached:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinishedDealing:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1315398275
@@ -900,6 +903,140 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1571446759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1571446760}
+  - component: {fileID: 1571446763}
+  - component: {fileID: 1571446762}
+  - component: {fileID: 1571446761}
+  - component: {fileID: 1571446764}
+  m_Layer: 5
+  m_Name: PauseButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1571446760
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571446759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 311040685}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -30, y: 68}
+  m_SizeDelta: {x: 120, y: 120}
+  m_Pivot: {x: 1, y: 0}
+--- !u!114 &1571446761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571446759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.48235294}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.69803923}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1571446762}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1571446762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571446759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 81993709d2c0fac449fe4d600289cdc3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1571446763
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571446759}
+  m_CullTransparentMesh: 0
+--- !u!114 &1571446764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571446759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd42df326e9820c4aacf6cb0f93a2254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseImage: {fileID: 21300000, guid: 81993709d2c0fac449fe4d600289cdc3, type: 3}
+  playImage: {fileID: 21300000, guid: 08b0b080ac19a1c42b53c42a656de1c2, type: 3}
+  image: {fileID: 1571446762}
+  button: {fileID: 1571446761}
 --- !u!1 &1572531721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,6 +1208,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb19d520346b28e4889815943a38acc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1706792565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1647964428919755634, guid: 1ea56572d2532b945bcb49b210cf3ba4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1647964429048165944}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1706792566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706792565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1706792567
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706792565}
+  m_CullTransparentMesh: 0
 --- !u!1001 &2125977597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1082,6 +1261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Card Two
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647964428919755634, guid: 1ea56572d2532b945bcb49b210cf3ba4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1647964428919755635, guid: 1ea56572d2532b945bcb49b210cf3ba4,
         type: 3}
@@ -1400,5 +1584,25 @@ PrefabInstance:
       propertyPath: drawnCardPile
       value: 
       objectReference: {fileID: 1270120857}
+    - target: {fileID: 1647964428898372036, guid: 1ea56572d2532b945bcb49b210cf3ba4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647964428898372038, guid: 1ea56572d2532b945bcb49b210cf3ba4,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1647964428898372038, guid: 1ea56572d2532b945bcb49b210cf3ba4,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647964428898372038, guid: 1ea56572d2532b945bcb49b210cf3ba4,
+        type: 3}
+      propertyPath: m_FillCenter
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ea56572d2532b945bcb49b210cf3ba4, type: 3}

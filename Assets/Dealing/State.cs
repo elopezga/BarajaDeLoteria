@@ -12,6 +12,11 @@ public class StateReporter : StateMachineBehaviour
     {
         animator.GetComponent<StateMachineManager>().ResolveStateEnter(stateInfo);
     }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.GetComponent<StateMachineManager>().ResolveStateExit(stateInfo);
+    }
 }
 
 [Serializable]

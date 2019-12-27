@@ -27,6 +27,11 @@ public class Deck
         return remaining.Count > 0;
     }
 
+    public bool IsOnLastCard()
+    {
+        return remaining.Count == 1;
+    }
+
     public void Shuffle()
     {
         throw new NotImplementedException();

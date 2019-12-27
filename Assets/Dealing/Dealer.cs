@@ -10,28 +10,45 @@ public class Dealer : MonoBehaviour
     [SerializeField] private DeckScriptableObject referenceDeck;
     [SerializeField] private float dealEachSecond = 4f;
 
-    public DrawCardEvent OnDrawFirstCard;
     public DrawCardEvent OnDrawCard;
     public DealingTimeStepEvent OnDealingTimeStep;
     public UnityEvent OnCardTimeReached;
+    public UnityEvent OnFinishedDealing;
 
     private Deck deck;
     private Coroutine dealingStepCoroutine;
 
+    private bool started = false;
+    private bool paused = false;
+    private bool dealNextCard = false;
+
+    private float elapsedTime = 0f;
+
     public void StartDealing()
     {
-        //this.dealingStepCoroutine = StartCoroutine(DealStep());
-        StartCoroutine(DealCardStep());
+        if (dealingStepCoroutine != null)
+        {
+            Debug.LogWarning("Dealing already started. Please stop it before starting again.");
+            return;
+        }
+
+        started = true;
+        DealNextCard();
     }
 
     public void DealNextCard()
     {
-        StartCoroutine(DealCardStep());
+        dealNextCard = true;
     }
 
     public void PauseDealing()
     {
-        throw new NotImplementedException();
+        paused = true;
+    }
+
+    public void ResumeDealing()
+    {
+        paused = false;
     }
 
     public void StopDealing()
@@ -39,78 +56,75 @@ public class Dealer : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void OnEnable()
-    {
-        //OnCardTimeReached.AddListener(DealNextCard);
-    }
-
-    private void OnDisable()
-    {
-        //OnCardTimeReached.RemoveListener(DealNextCard);
-    }
-
     private void Start()
     {
         deck = referenceDeck.CreateDeck();
     }
- 
-    private IEnumerator DealCardStep()
+
+    private void Update()
     {
-        if (!deck.HasCardsRemaining())
+        if (started)
+        {
+            BetterDealStep();
+        }
+    }
+
+    private void BetterDealStep()
+    {
+        /* if (!deck.HasCardsRemaining())
         {
             Debug.LogWarning("There are no more cards to deal.");
-            yield return null;
+            return;
+        } */
+
+        if (paused)
+        {
+            return;
+        }
+
+        if (dealNextCard)
+        {
+            DealCard();
         }
         else
         {
-            Card cardDealt = deck.PlayCard();
-            OnDrawCard?.Invoke(cardDealt);
+            TimerStep();
+        }
+    }
 
-            float elapsedTime = 0f;
-            while (elapsedTime <= dealEachSecond)
-            {
-                elapsedTime += Time.deltaTime;
-                float timeLeftPercentage = (dealEachSecond - elapsedTime) / dealEachSecond;
-                OnDealingTimeStep?.Invoke(timeLeftPercentage);
+    private void DealCard()
+    {
+        if (!deck.HasCardsRemaining())
+        {
+            Debug.LogWarning("There are not more cards to deal.");
 
-                yield return null;
-            }
+            started = false;
+            paused = false;
+            dealNextCard = false;
+
+            OnFinishedDealing?.Invoke();
+            return;
+        }
+
+        Card cardDealt = deck.PlayCard();
+        OnDrawCard?.Invoke(cardDealt);
+        dealNextCard = false;
+    }
+
+    private void TimerStep()
+    {
+        if (elapsedTime < dealEachSecond)
+        {
+            elapsedTime += Time.deltaTime;
+            float timeLeftPercentage = (dealEachSecond - elapsedTime) / dealEachSecond;
+            OnDealingTimeStep?.Invoke(timeLeftPercentage);
+        }
+        else
+        {
+            elapsedTime = 0f;
             OnCardTimeReached?.Invoke();
         }
     }
-
-    private IEnumerator DealStep()
-    {
-        // Only do deal step when card is placed
-        if (deck.HasCardsRemaining())
-        {
-            Card cardDealt = deck.PlayCard();
-            OnDrawFirstCard?.Invoke(cardDealt);
-        }
-
-        float elapsedTime = 0f;
-
-        while (deck.HasCardsRemaining())
-        {
-            elapsedTime += Time.deltaTime;
-            Debug.Log((dealEachSecond - elapsedTime)/dealEachSecond);
-            float timeLeftPercentage = (dealEachSecond - elapsedTime) / dealEachSecond;
-            OnDealingTimeStep?.Invoke(timeLeftPercentage);
-
-            if (elapsedTime >= dealEachSecond)
-            {
-                elapsedTime = 0f;
-                Card cardDealt = deck.PlayCard();
-                OnDrawCard?.Invoke(cardDealt);
-            }
-
-            yield return null;
-        }
-
-        this.dealingStepCoroutine = null;
-    }
-
-
 }
 
 [System.Serializable]

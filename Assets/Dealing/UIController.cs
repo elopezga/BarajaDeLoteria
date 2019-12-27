@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class UIController : MonoBehaviour
 {
+    public PauseButton PauseButton;
+
     [SerializeField] private Image timeIndicator;
 
     // Start is called before the first frame update
@@ -21,7 +24,6 @@ public class UIController : MonoBehaviour
 
     public void UpdateTimeIndicator(float percentage)
     {
-        Debug.Log(percentage);
         timeIndicator.fillAmount = percentage;
     }
 }
