@@ -22,6 +22,7 @@ public class Orchestrator : MonoBehaviour
 
         cardsManager.OnCardDiscardEnd.AddListener(dealer.DealNextCard);
         uiController.PauseButton.AddListener(HandlePause);
+        uiController.MenuController.AddListenerOnStartClick(HandleStartClicked);
     }
 
     private void OnDisable()
@@ -37,6 +38,7 @@ public class Orchestrator : MonoBehaviour
 
         cardsManager.OnCardDiscardEnd.RemoveListener(dealer.DealNextCard);
         uiController.PauseButton.RemoveListener(HandlePause);
+        uiController.MenuController.RemoveListenerOnStartClick(HandleStartClicked);
     }
 
     private void HandlePause()
@@ -49,6 +51,11 @@ public class Orchestrator : MonoBehaviour
         {
             stateMachine.GoToStatePause();
         }
+    }
+
+    private void HandleStartClicked()
+    {
+        stateMachine.GoToStateDealing();
     }
 
 

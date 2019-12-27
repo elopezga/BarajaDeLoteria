@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class UIController : MonoBehaviour
 {
     public PauseButton PauseButton;
+    public MenuController MenuController;
 
     [SerializeField] private Image timeIndicator;
 
@@ -25,5 +26,15 @@ public class UIController : MonoBehaviour
     public void UpdateTimeIndicator(float percentage)
     {
         timeIndicator.fillAmount = percentage;
+    }
+
+    public void ShowMenu()
+    {
+        MenuController.Show();
+    }
+
+    public void HideMenu()
+    {
+        MenuController.Hide();
     }
 }
