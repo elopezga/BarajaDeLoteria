@@ -14,7 +14,8 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        HideTimeIndicator();
+        PauseButton.Hide();
     }
 
     // Update is called once per frame
