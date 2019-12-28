@@ -19,10 +19,12 @@ public class Orchestrator : MonoBehaviour
         dealer.OnCardTimeReached.AddListener(cardsManager.HandleCardTimeReached);
         dealer.OnDealingTimeStep.AddListener(uiController.UpdateTimeIndicator);
         dealer.OnFinishedDealing.AddListener(HandleFinishedDealing);
+        dealer.OnStopDealing.AddListener(cardsManager.HandleStopDealing);
 
         cardsManager.OnCardDiscardEnd.AddListener(dealer.DealNextCard);
         uiController.PauseButton.AddListener(HandlePause);
         uiController.MenuController.AddListenerOnStartClick(HandleStartClicked);
+        uiController.StopButton.onClick.AddListener(HandleStopPressed);
     }
 
     private void OnDisable()
@@ -35,10 +37,12 @@ public class Orchestrator : MonoBehaviour
         dealer.OnCardTimeReached.RemoveListener(cardsManager.HandleCardTimeReached);
         dealer.OnDealingTimeStep.RemoveListener(uiController.UpdateTimeIndicator);
         dealer.OnFinishedDealing.RemoveListener(HandleFinishedDealing);
+        dealer.OnStopDealing.RemoveListener(cardsManager.HandleStopDealing);
 
         cardsManager.OnCardDiscardEnd.RemoveListener(dealer.DealNextCard);
         uiController.PauseButton.RemoveListener(HandlePause);
         uiController.MenuController.RemoveListenerOnStartClick(HandleStartClicked);
+        uiController.StopButton.onClick.RemoveListener(HandleStopPressed);
     }
 
     private void HandlePause()
@@ -60,13 +64,21 @@ public class Orchestrator : MonoBehaviour
         uiController.ShowTimeIndicator();
         uiController.PauseButton.Reset();
         uiController.PauseButton.Show();
+        uiController.ShowStopButton();
         stateMachine.GoToStateDealing();
+    }
+
+    private void HandleStopPressed()
+    {
+        dealer.StopDealing();
+        HandleFinishedDealing();
     }
 
     private void HandleFinishedDealing()
     {
         uiController.PauseButton.Reset();
         uiController.PauseButton.Hide();
+        uiController.HideStopButton();
         uiController.HideTimeIndicator();
         uiController.MenuController.Show();
         stateMachine.GoToStateStart();

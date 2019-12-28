@@ -20,30 +20,6 @@ public class CardsManager : MonoBehaviour
         availableCard = cardOne;
     }
 
-    /* public void HandleFirstCardDraw(Card card)
-    {
-        availableCard = cardOne;
-        availableCard.UpdateView(card);
-    }
-
-    public void HandleCardDraw(Card card)
-    {
-        Action updateNextCard = () => {
-            if (availableCard.Equals(cardOne))
-            {
-                availableCard = cardTwo;    
-            }
-            else
-            {
-                availableCard = cardOne;
-            }
-
-            availableCard.UpdateView(card);
-        };
-
-        availableCard.DiscardCard(updateNextCard);        
-    } */
-
     public void HandleCardDraw(Card card)
     {
         if (IsFirstCardDraw())
@@ -61,6 +37,12 @@ public class CardsManager : MonoBehaviour
     public void HandleCardTimeReached()
     {
         availableCard?.DiscardCard(OnCardDiscardStart.Invoke, OnCardDiscardEnd.Invoke);
+    }
+
+    public void HandleStopDealing()
+    {
+        cardOne.ResetToCardPile();
+        cardTwo.ResetToCardPile();
     }
 
     private bool IsFirstCardDraw()

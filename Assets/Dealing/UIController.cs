@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     public PauseButton PauseButton;
     public MenuController MenuController;
+    public Button StopButton;
 
     [SerializeField] private Image timeIndicator;
 
@@ -16,12 +17,23 @@ public class UIController : MonoBehaviour
     {
         HideTimeIndicator();
         PauseButton.Hide();
+        StopButton.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void HideStopButton()
+    {
+        StopButton.gameObject.SetActive(false);
+    }
+
+    public void ShowStopButton()
+    {
+        StopButton.gameObject.SetActive(true);
     }
 
     public void HideTimeIndicator()

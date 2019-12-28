@@ -14,6 +14,7 @@ public class Dealer : MonoBehaviour
     public DealingTimeStepEvent OnDealingTimeStep;
     public UnityEvent OnCardTimeReached;
     public UnityEvent OnFinishedDealing;
+    public UnityEvent OnStopDealing;
 
     private Deck deck;
     private Coroutine dealingStepCoroutine;
@@ -53,7 +54,12 @@ public class Dealer : MonoBehaviour
 
     public void StopDealing()
     {
-        throw new NotImplementedException();
+        started = false;
+        paused = false;
+        dealNextCard = false;
+        elapsedTime = 0f;
+        ResetDeck();
+        OnStopDealing?.Invoke();
     }
 
     public void ResetDeck()

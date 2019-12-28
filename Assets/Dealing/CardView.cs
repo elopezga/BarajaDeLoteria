@@ -47,4 +47,9 @@ public class CardView : MonoBehaviour
         };
         tweener.TweenDiscardCard(startCallback, completeCallback);
     }
+
+    public void ResetToCardPile()
+    {
+        tweener.ResetToCardPile();
+    }
 }
